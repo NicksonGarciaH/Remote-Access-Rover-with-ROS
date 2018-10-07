@@ -230,8 +230,10 @@ function webcam
 
 
 ### Autors
-* Nickson Garcia H. -  (2420132006@estudiantesunibague.edu.co)
+* Nickson Garcia H.  - (2420132006@estudiantesunibague.edu.co)
 * Cristian Molina H. - (2420132009@estudiantesunibague.edu.co)
+* Harold F. Murcia.  - (harold.murcia@unibague.edu.co )
+
 
 #### References
 - http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick
