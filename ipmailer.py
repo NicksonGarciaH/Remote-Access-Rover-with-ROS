@@ -9,13 +9,13 @@ lines=output.split("\n")
 ip=lines[1].strip().split("  ")[0].split(":")[1]
 #print "Jetson IP: " + str(ip)
 
-fromaddr = 'agrosense.info@gmail.com'
-toaddrs  = 'nick.garcia0906@gmail.com'
+fromaddr = 'example@gmail.com'
+toaddrs  = 'example@gmail.com'
 msg = "Jetson IP [{}]".format(ip) 
  
 # Datos
-username = 'agrosense.info@gmail.com'
-password =  'semilleroSI2C'
+username = 'example@gmail.com'
+password =  'examplePSS'
  
 # Enviando el correo
 server = smtplib.SMTP('smtp.gmail.com:587')
