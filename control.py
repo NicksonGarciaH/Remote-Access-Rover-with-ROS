@@ -80,11 +80,11 @@ def move(buttons, axes):
     #rospy.loginfo("Left Motor %s", ML)
     #rospy.loginfo("Right Motor %s", MR)
     if(buttons[4]==1):
-        G=50.0 # max=64
+        G=60.0 # max=64
     else:
         G=0.0
     U_R =int(MR*G)
-    U_L =int(-ML*G)
+    U_L =int(ML*G)
     rc.ForwardBackwardM2(address,64+U_R+U_L)	#1/4 power forward
     rc.ForwardBackwardM1(address,64+U_R-U_L)	#1/4 power backward
 
