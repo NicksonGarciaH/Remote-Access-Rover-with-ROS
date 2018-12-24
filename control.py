@@ -41,13 +41,6 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Joy
 import time, os
 from roboclaw import Roboclaw
-import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-
-GPIO.setup(26, GPIO.OUT)
-GPIO.setup(20, GPIO.OUT) #Leds
-GPIO.setup(21, GPIO.OUT) #Lasers
 
 rc = Roboclaw("/dev/tty_roboclaw",115200)
 rc.Open()
@@ -69,29 +62,29 @@ def callback2(data):
     else:
 	int_OK=1
 def outs(buttons,axes):
-    if buttons[4]==1 and buttons[0]==1:
-        rospy.loginfo("Laser ON")
-	GPIO.output(21, 0)  # turn on
-    elif buttons[4]==1 and buttons[5]==1:
-	rospy.loginfo("Leds ON")
-        GPIO.output(20, 0)  # turn on
-    elif buttons[4]==1 and buttons[1]==1:
-        rospy.loginfo("Lights OFF")
-	GPIO.output(21, 1)  # turn off
-	GPIO.output(20, 1)  # turn off
-    elif axes[2]==-1 and axes[5]==-1 and buttons[0]==1 and buttons[2]==1:
-        os.system("sudo reboot")
+	
+	if buttons[4]==1 and buttons[0]==1:
+        	#Laser ON
+		os.system("sudo python /home/ubuntu/Desktop/Mercury/laser_on.py")
+	elif buttons[4]==1 and buttons[5]==1:
+		#Leds ON
+		os.system("sudo python /home/ubuntu/Desktop/Mercury/leds_on.py")
+	elif buttons[4]==1 and buttons[1]==1:
+        	#Lights OFF
+		os.system("sudo python /home/ubuntu/Desktop/Mercury/lights_off.py")
+	elif axes[2]==-1 and axes[5]==-1 and buttons[0]==1 and buttons[2]==1:
+        	os.system("sudo reboot")
 def move(buttons, axes):
     ML = axes[0];
-    MR = axes[4];
-    rospy.loginfo("Left Motor %s", ML)
-    rospy.loginfo("Right Motor %s", MR)
+    MR = axes[3];
+    #rospy.loginfo("Left Motor %s", ML)
+    #rospy.loginfo("Right Motor %s", MR)
     if(buttons[4]==1):
         G=50.0 # max=64
     else:
         G=0.0
     U_R =int(MR*G)
-    U_L =int(ML*G)
+    U_L =int(-ML*G)
     rc.ForwardBackwardM2(address,64+U_R+U_L)	#1/4 power forward
     rc.ForwardBackwardM1(address,64+U_R-U_L)	#1/4 power backward
 
