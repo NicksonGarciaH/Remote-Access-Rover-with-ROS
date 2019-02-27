@@ -108,11 +108,6 @@ And place this code on it:
 ```
 source /opt/ros/indigo/setup.bash
 
-function remote {
-  sudo chmod 666 /dev/tty_roboclaw
-  python /home/ubuntu/Desktop/Mercury/control.py &
-}
-
 function control_arm {
   sudo chmod 777 /dev/tty_pololu1
   sudo chmod 777 /dev/tty_pololu2
@@ -144,20 +139,50 @@ function webcam_server {
         source ~/rosvid_ws/devel/setup.bash
         roslaunch vidsrv vidsrv.launch
 }
+
+function run {
+	sudo chmod 777 /dev/tty_roboclaw
+	source /home/ubuntu/rbcw_ws/devel/setup.bash
+	roslaunch roboclaw_node roboclaw.launch &
+	echo $"Run Launched"
+}
+
+function kinect {
+	roslaunch freenect_launch freenect.launch
+}
+
+function ekf {
+        source ~/loc_ws/devel/setup.bash
+        roslaunch robot_localization ekf_template.launch
+}
+
+function imu_node {
+	sudo chmod 777 /dev/ttyUSB0
+	source /home/ubuntu/imu_ws/devel/setup.bash
+	roslaunch xsens_driver xsens.launch
+}
+
 # Main function
 function rover {
         #exportar_hamachi
         exportar
         roscore &
         echo $"Launched roscore"
-        remote
-        echo $"Launched remote"
-        control_arm
+        run &
+        echo $"Launched run"
+        control_arm &
         echo $"Launched arm"
 
 }
 
-sudo python /home/ubuntu/Desktop/Mercury/rover_config.py
+# Add CUDA bin & library paths:
+export PATH=/usr/local/cuda/bin:/opt/ros/indigo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+export LD_LIBRARY_PATH=/usr/local/cuda/lib:/opt/ros/indigo/lib
+# Add CUDA bin & library paths:
+export PATH=/usr/local/cuda-6.5/bin:/usr/local/cuda/bin:/opt/ros/indigo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+export LD_LIBRARY_PATH=/usr/local/cuda-6.5/lib:/usr/local/cuda/lib:/opt/ros/indigo/lib
+
+sudo python /home/ubuntu/Desktop/Mercury/bash_config.py
 ```
 ## Getting Started on host PC
 - Install ros according to your ubuntu version, in this case Ubuntu 16.04.
