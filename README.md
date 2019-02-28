@@ -164,15 +164,10 @@ function imu_node {
 
 # Main function
 function rover {
-        #exportar_hamachi
-        exportar
         roscore &
-        echo $"Launched roscore"
-        run &
-        echo $"Launched run"
-        control_arm &
-        echo $"Launched arm"
-
+        sleep 4
+        piloto &
+        run
 }
 
 # Add CUDA bin & library paths:
