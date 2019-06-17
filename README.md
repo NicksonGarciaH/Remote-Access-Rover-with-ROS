@@ -255,10 +255,6 @@ function webcam
 * Harold F. Murcia.  - (harold.murcia@unibague.edu.co )
 
 
-#### References
-- http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick
-- http://roboticsweekends.blogspot.com/2017/12/how-to-use-usb-camera-with-ros-on.html
-
 [ros]: <http://www.ros.org/>
 [lib-rc]: <http://www.basicmicro.com/downloads>
 [pol]: <https://www.pololu.com/product/1353>
