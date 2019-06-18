@@ -28,7 +28,7 @@ echo out > /sys/class/gpio/gpio164/direction;        #GPIO 164 OUT
 sleep 0.2;
 echo 0 > /sys/class/gpio/gpio165/value; #GPIO 165 LOW
 echo 0 > /sys/class/gpio/gpio166/value; #GPIO 166 LOW
-# Set CPU to full performance
+# Set CPU to full performance (4 Jetson's cores)
 echo 0 > /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/enable;
 echo 1 > /sys/devices/system/cpu/cpu0/online;
 echo 1 > /sys/devices/system/cpu/cpu1/online;
