@@ -66,13 +66,12 @@ Save and run:
 ```
 source /opt/ros/indigo/setup.bash
 
-function control_arm {
-  sudo chmod 777 /dev/tty_pololu1
-  sudo chmod 777 /dev/tty_pololu2
-  sudo chmod 777 /dev/ttyACM1
-  python /home/rover/Desktop/Mercury/arm.py &
+function arm {
+        sudo chmod 777 /dev/tty_pololu
+        python /home/ubuntu/Desktop/Mercury/arm.py
+        sleep 1
+        echo $"Arm OK..."
 }
-
 
 function exportar {
         export ROS_IP = {JetsonIP}
@@ -85,16 +84,19 @@ function exportar_hamachi {
         export ROS_MASTER_URI=http://{pcHamachiIP}:11311
 }
 
-#For local webcam image
+#Launch main webcam
 function webcam {
-        rosrun image_view image_view image:=/usb_cam/image_raw
+	roslaunch usb_cam usb_cam-test.launch &
+        sleep 5
+        echo $"Main camera ready..."
 }
 
 function run {
-	sudo chmod 777 /dev/tty_roboclaw
-	source /home/ubuntu/rbcw_ws/devel/setup.bash
-	roslaunch roboclaw_node roboclaw.launch &
-	echo $"Run Launched"
+        sudo chmod 777 /dev/tty_roboclaw
+        source /home/ubuntu/rbcw_ws/devel/setup.bash
+        roslaunch roboclaw_node roboclaw.launch &
+        sleep 3
+        echo $"Run Launched"
 }
 
 function kinect {
@@ -102,8 +104,7 @@ function kinect {
 }
 
 function ekf {
-        source ~/loc_ws/devel/setup.bash
-        roslaunch robot_localization ekf_template.launch
+        python ~/Desktop/Mercury/ekf.py
 }
 
 function imu_node {
@@ -112,12 +113,17 @@ function imu_node {
 	roslaunch xsens_driver xsens.launch
 }
 
+
 # Main function
 function rover {
         roscore &
         sleep 4
         piloto &
-        run
+        echo $"Launched piloto"
+        sleep 2
+        run &
+        sleep 2
+        echo $"Ready..."
 }
 
 sudo python /home/ubuntu/Desktop/Mercury/bash_config.py
@@ -162,11 +168,6 @@ function exportar_hamachi
 function exportar
 {
   export ROS_IP = {pcIP}
-}
-
-function arm
-{
-  rostopic echo /arm
 }
 
 # To access Jetson webcam image
