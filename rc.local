@@ -18,7 +18,7 @@ echo out > /sys/class/gpio/gpio191/direction;
 echo 1 > /sys/class/gpio/gpio191/value;
 modprobe -r iwlwifi;
 modprobe iwlwifi;
-# RELAYS
+# RELAYS (GPIO off)
 echo 165 > /sys/class/gpio/export; #Enable GPIO 165 = PIN 55 = LEDS
 echo out > /sys/class/gpio/gpio165/direction;        #GPIO 165 OUT
 echo 166 > /sys/class/gpio/export; #Enable GPIO 166 = PIN 58 = LASER
