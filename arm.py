@@ -255,8 +255,8 @@ def free():
 	servo.setTarget(5,0)
 
 def ARM():
-    arm_pub = rospy.Publisher('arm_string', String, queue_size=10)
-    rospy.init_node('rover_arm', anonymous=True)
+    arm_pub = rospy.Publisher('arm_pose', String, queue_size=10)
+    rospy.init_node('arm_node', anonymous=True)
     #arm_state =  str([servo.getPosition(0),servo.getPosition(1)])
     #pub.publish("arm state"+arm_state)
     rospy.Subscriber("/joy", Joy, callback)
