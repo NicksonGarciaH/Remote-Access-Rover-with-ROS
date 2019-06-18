@@ -84,9 +84,11 @@ def move_arm(ch,dir,val):
 			U=2000
 		elif U<4500:
 			print "Base left" + "\t" + str(U)
+			arm_state = "Base left" + "\t" + str(U)
 		elif U>4500:
 			print "Base right" + "\t" + str(U)
-
+			arm_state = "Base right" + "\t" + str(U)
+			
 		servo.setTarget(ch,int(U))
 
 	elif ch==1:
@@ -99,9 +101,11 @@ def move_arm(ch,dir,val):
                         U=6000
                 elif U<7000:
 			print "Extension 1 IN" + "\t" + str(U)
+			arm_state = "Extension 1 IN" + "\t" + str(U)
 		elif U>7000:
                         print "Extension 1 OUT" + "\t" + str(U)
-
+			arm_state = "Extension 1 OUT" + "\t" + str(U)
+			
                 servo.setTarget(ch,int(U))
 
 	elif ch==2:
@@ -114,8 +118,10 @@ def move_arm(ch,dir,val):
                         U=1000
                 elif U<2600:
                         print "Elbow up" + "\t" + str(U)
+			arm_state = "Elbow up" + "\t" + str(U)
                 elif U>2600:
                         print "Elbow down" + "\t" + str(U)
+			arm_state = "Elbow down" + "\t" + str(U)
 
                 servo.setTarget(ch,int(U))
 
@@ -130,8 +136,10 @@ def move_arm(ch,dir,val):
 		
                 elif U<3500:
                         print "Extension 2 IN" + "\t" + str(U)
+			arm_state = "Extension 2 IN" + "\t" + str(U)
                 elif U>3500:
                         print "Extension 2 OUT" + "\t" + str(U)
+			arm_state = "Extension 2 OUT" + "\t" + str(U)
 
                 servo.setTarget(ch,int(U))
 
@@ -145,8 +153,10 @@ def move_arm(ch,dir,val):
                         U=1000
                 elif dir==-1:
                         print "Wrist left" + "\t" + str(U)
+			arm_state = "Wrist left" + "\t" + str(U)
                 elif dir==1:
                         print "Wrist right" + "\t" + str(U)
+			arm_state = "Wrist right" + "\t" + str(U)
 
                 servo.setTarget(ch,int(U))	
 
@@ -160,35 +170,42 @@ def move_arm(ch,dir,val):
                         U=4300
                 elif dir==-1:
                         print "Closing gripper" + "\t" + str(U)
+			arm_state = "Closing gripper" + "\t" + str(U)
                 elif dir==1:
                         print "Opening gripper" + "\t" + str(U)
+			arm_state = "Opening gripper" + "\t" + str(U)
 
                 servo.setTarget(ch,int(U))
 
 def expand():
         print "... Deploying ..."
+	arm_state = "... Deploying ..."
 
         servo.setTarget(0,2000)	
 	time.sleep(3)
 	servo.setTarget(0,0)
 	print "Base OK"
+	arm_state = "Base OK"
 
 	servo.setTarget(1,9000)
 	time.sleep(8)
 	servo.setTarget(1,0)
 	print "Extension 1 OK"
+	arm_state = "Extension 1 OK"
 
 	for joint2 in range(8500,9000,50):
 		servo.setTarget(4,joint2)
 		time.sleep(0.02)
         servo.setTarget(4,0)
 	print "Wrist OK"
+	arm_state = "Wrist OK"
 
 	for gripper in range(4300,9000,50):
                 servo.setTarget(5,gripper)
                 time.sleep(0.02)
         servo.setTarget(5,0)
 	print "Gripper OK"
+	arm_state = "Gripper OK"
 
 	for joint1 in range(5000,7000,50):
 		servo.setTarget(2,joint1)
@@ -200,29 +217,35 @@ def expand():
         time.sleep(6)
 	servo.setTarget(3,0)
         print "Extension 2 OK"
+	arm_state = "Extension 2 OK"
 
 	free()
 	time.sleep(1)
-	print "Extended arm OK"        
+	print "Extended arm OK"  
+	arm_state = "Extended arm OK"  
 	
 def pickup():
         print "... Picking up ..."
+	arm_state = "... Picking up ..."
         
 	for gripper in range(8000,4300,-50):
         	servo.setTarget(5,gripper)
                 time.sleep(0.02)
 	print "Gripper OK"
+	arm_state = "Gripper OK"
 
 	servo.setTarget(3,2000)
         time.sleep(6)
 	servo.setTarget(3,0)
 	print "Extension 2 OK"
+	arm_state = "Extension 2 OK"
 
 	for joint2 in range(8000,4500,-50):
                 servo.setTarget(4,joint2)
                 time.sleep(0.02)
         servo.setTarget(4,0)
 	print "Wrist OK"
+	arm_state = "Wrist OK"
         
 	for joint1 in range(2000,1000,-20):
                 servo.setTarget(2,joint1)
@@ -230,23 +253,28 @@ def pickup():
         servo.setTarget(2,0)
 	servo.setTarget(5,4000)
         print "Elbow OK"
+	arm_state = "Elbow OK"
 
 	servo.setTarget(1,4000)
         time.sleep(9)
         servo.setTarget(1,0)
 	print "Extension 1 OK"
+	arm_state = "Extension 1 OK"
 
 	servo.setTarget(0,7000)
         time.sleep(3)
         servo.setTarget(0,0)	
 	print "Base OK"
+	arm_state = "Base OK"
 
 	free()
         time.sleep(1)
-        print "Picked up OK"         
+        print "Picked up OK"
+	arm_state = "Picked up OK"
 
 def free():
         print "free"
+	arm_state = "free"
         servo.setTarget(0,0)
         servo.setTarget(1,0)
         servo.setTarget(2,0)
@@ -257,8 +285,7 @@ def free():
 def ARM():
     arm_pub = rospy.Publisher('arm_pose', String, queue_size=10)
     rospy.init_node('arm_node', anonymous=True)
-    #arm_state =  str([servo.getPosition(0),servo.getPosition(1)])
-    #pub.publish("arm state"+arm_state)
+    #arm_pub.publish("Arm state:"+arm_state)
     rospy.Subscriber("/joy", Joy, callback)
     rospy.spin()
 
