@@ -134,7 +134,9 @@ sudo python /home/ubuntu/Desktop/Mercury/bash_config.py
 #### Configuring a Linux-Supported Joystick with ROS
 - Install the package:
 `sudo apt-get install ros-kinetic-joy`
-- The joystick will be referred to by jsX, you can test it by running:
+- The joystick will be referred to by jsX.
+`ls /dev/input`
+- You can test it by running:
 `sudo jstest /dev/input/jsX`
 Move the joystick around to see the data change. 
 - Give permissions on the joystick port:
@@ -143,7 +145,6 @@ Move the joystick around to see the data change.
 `roscore`
 `rosparam set joy_node/dev "/dev/input/jsX"`
 `rosrun joy joy_node`
-
 To see the data from the joystick:
 `rostopic echo joy`
 
