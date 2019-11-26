@@ -3,6 +3,8 @@ A repository for a 6-wheel rocker bogie rover, based on Robotic Operative System
 This repository contents: 
 - source codes.
 - dev scripts (Python | ROS)
+Watch the YouTube video [here][vid]
+[Doc]
 
 ## Hardware elements
 - Nvidia Jetson TK1: [Lib][jet]
@@ -192,3 +194,5 @@ function webcam
 [ind]: <http://wiki.ros.org/indigo/Installation/Ubuntu>
 [ind-j]: <http://wiki.ros.org/indigo/Installation/UbuntuARM>
 [ham]: <https://medium.com/@KyleARector/logmein-hamachi-on-raspberry-pi-ad2ba3619f3a>
+[vid]: <https://www.youtube.com/watch?v=stQqyb9inXY&t=333s>
+[Doc]: <https://repositorio.unibague.edu.co/jspui/bitstream/20.500.12313/1296/1/Trabajo%20de%20grado.pdf>
