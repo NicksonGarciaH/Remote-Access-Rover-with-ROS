@@ -3,8 +3,8 @@ A repository for a 6-wheel rocker bogie rover, based on Robotic Operative System
 This repository contents: 
 - source codes.
 - dev scripts (Python | ROS)
--Watch the YouTube video [here][vid]
--[Doc]
+- Watch the YouTube video [here][vid]
+- [Doc]
 
 ## Hardware elements
 - Nvidia Jetson TK1: [Lib][jet]
